@@ -7,18 +7,13 @@ from actions.Action import Action
 
 
 class RefreshShopWorkflow:
-    # Replace with rect
-    buy_confirm_button_rect = [737, 926]
-    refresh_button_rect = [343, 1052]
-    refresh_confirm_button_rect = [762, 873]
-    blank_rect = [980, 767]
-
     def __init__(self):
         print("Executing refresh shop workflow")
 
         self.app_info = AppInfo()
         self.capture = Capture(self.app_info)
         self.measure_process = MeasureProcess(self.app_info)
+        self.coordination = Coordination(self.app_info, self.measure_process)
         logger = Logger(self.measure_process)
 
         self.log = logger.info
@@ -27,11 +22,12 @@ class RefreshShopWorkflow:
         self.log("Refresh current shop")
 
         Action(
-            xPosition=self.refresh_button_rect[0], yPosition=self.refresh_button_rect[1]
+            xPosition=self.coordination.refresh_button_rect[0],
+            yPosition=self.coordination.refresh_button_rect[1],
         ).click()
         Action(
-            xPosition=self.refresh_confirm_button_rect[0],
-            yPosition=self.refresh_confirm_button_rect[1],
+            xPosition=self.coordination.refresh_confirm_button_rect[0],
+            yPosition=self.coordination.refresh_confirm_button_rect[1],
         ).click()
 
         self.measure_process.increase_refreshed_times()
@@ -45,16 +41,15 @@ class RefreshShopWorkflow:
 
                 Action(xPosition=item_buy_button_x, yPosition=item_buy_button_u).click()
                 Action(
-                    xPosition=self.buy_confirm_button_rect[0],
-                    yPosition=self.buy_confirm_button_rect[1],
+                    xPosition=self.coordination.buy_confirm_button_rect[0],
+                    yPosition=self.coordination.buy_confirm_button_rect[1],
                 ).click()
 
     def scan_for_items(self, scrolled):
         self.log("Scanning for item")
         boxes = self.capture.get_boxes()
 
-        coordination = Coordination(self.measure_process)
-        buy_list_coordinate = coordination.get_item_coordinate_from_texts(
+        buy_list_coordinate = self.coordination.get_item_coordinate_from_texts(
             boxes, self.app_info.list_items
         )
 
@@ -65,8 +60,8 @@ class RefreshShopWorkflow:
     def execute(self):
         self.scan_for_items(False)
         Action(
-            xPosition=self.blank_rect[0],
-            yPosition=self.blank_rect[1],
+            xPosition=self.coordination.blank_rect[0],
+            yPosition=self.coordination.blank_rect[1],
         ).scroll()
         self.scan_for_items(True)
 

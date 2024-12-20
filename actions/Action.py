@@ -1,6 +1,8 @@
 import pyautogui
 import time
 
+pyautogui.FAILSAFE = False
+
 
 class Action:
     def __init__(self, xPosition, yPosition):

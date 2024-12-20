@@ -3,7 +3,7 @@ import win32gui
 
 class AppInfo:
     application_name = "Epic Seven"
-    covenant_bookmarks = "Covenant"
+    covenant_bookmarks = "Lapin"
     mystic_medals = "Mystic"
 
     list_items = [covenant_bookmarks, mystic_medals]
@@ -37,6 +37,9 @@ class AppInfo:
 
     def get_app_rect(self, hwnd):
         left, top, right, bottom = win32gui.GetClientRect(hwnd)
+        self.width = right - left
+        self.height = bottom - top
+
         left, top = win32gui.ClientToScreen(hwnd, (left, top))
         right, bottom = win32gui.ClientToScreen(hwnd, (right - left, bottom - top))
 
@@ -47,3 +50,6 @@ class AppInfo:
         self.top = app_rect[1] + self.default_padding
         self.right = app_rect[2] + self.default_padding
         self.bottom = app_rect[3] + self.default_padding
+
+        print(self.width)
+        print(self.height)
