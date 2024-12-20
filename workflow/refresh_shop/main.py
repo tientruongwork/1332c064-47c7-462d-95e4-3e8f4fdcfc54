@@ -58,12 +58,15 @@ class RefreshShopWorkflow:
             self.click_refresh()
 
     def execute(self):
-        self.scan_for_items(False)
-        Action(
-            xPosition=self.coordination.blank_rect[0],
-            yPosition=self.coordination.blank_rect[1],
-        ).scroll()
-        self.scan_for_items(True)
+        try:
+            self.scan_for_items(False)
+            Action(
+                xPosition=self.coordination.blank_rect[0],
+                yPosition=self.coordination.blank_rect[1],
+            ).scroll()
+            self.scan_for_items(True)
+        except:
+            pass
 
     def end(self, duration):
         print("Auto refresh shop ended")

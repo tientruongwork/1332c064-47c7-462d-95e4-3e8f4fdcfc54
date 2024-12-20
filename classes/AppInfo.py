@@ -3,7 +3,7 @@ import win32gui
 
 class AppInfo:
     application_name = "Epic Seven"
-    covenant_bookmarks = "Lapin"
+    covenant_bookmarks = "Covenant"
     mystic_medals = "Mystic"
 
     list_items = [covenant_bookmarks, mystic_medals]
@@ -50,6 +50,3 @@ class AppInfo:
         self.top = app_rect[1] + self.default_padding
         self.right = app_rect[2] + self.default_padding
         self.bottom = app_rect[3] + self.default_padding
-
-        print(self.width)
-        print(self.height)

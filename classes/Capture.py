@@ -13,8 +13,6 @@ class Capture:
     def __init__(self, appInfo):
         self.appInfo = appInfo
 
-        pass
-
     def capture_handler(self):
         hwndDC = win32gui.GetWindowDC(self.appInfo.parent_app)
         mfcDC = win32ui.CreateDCFromHandle(hwndDC)
